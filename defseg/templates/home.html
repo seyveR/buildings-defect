@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500;0,200;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,800;1,500&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="{% static 'images/prostor_icon.ico' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+    
+    <title>SamsungAI</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-line">
+                <div class="header-logo">
+                    <a href="/"><img src="{% static 'files/narfu.jpg' %}" alt=""></a>
+                </div>
+    
+    
+                <div class="nav">
+                    <a class="nav-item" href="https://taplink.cc/akvo">Контакты</a>
+                    <a class="nav-item" href="/">О нас</a>
+                </div>
+    
+                <div class="btn">
+                    <a href="/">
+                        <img class="button-log" src="{% static 'files/user.png' %}">
+                    
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-main-info">
+        <div class="main-content">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-file">
+                    <div class="file-input">
+                        <label for="photo">Выберите фото</label>
+                        <input type="file" id="photo" name="photo" accept=".jpg, .png">
+                    </div>
+                </div>
+                <button class="file-input-btn" type="submit">Отправить</button>
+            </form>
+            <div class="output-file">
+                <p class="image-caption">Оригинальное фото</p>
+                {% if original_image_content %}
+                <img src="data:image/png;base64,{{ original_image_content }}" alt="Original Image">
+                {% endif %}
+            </div>
+            <div class="output-file">
+                <p class="image-caption">Обработанное фото</p>
+                {% if output_image_path %}
+                <img src="data:image/png;base64,{{ output_image_path }}" alt="Processed Image">
+                {% endif %}
+            </div>
+            <div class="photo-info">
+                {% if output_image_path %}
+                    <p id="info-text">На фото определены следующие дефекты: {{ lable_target }} <br>Площадь дефекта на фото равна {{ def_area }}%</p>
+                {% else %}
+                    <p id="info-text">Загрузите фото и проверьте определенные дефекты</p>
+                {% endif %}
+            </div>  
+        </div>
+    </div>
+    
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
